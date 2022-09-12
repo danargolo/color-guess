@@ -1,0 +1,12 @@
+#ball-container {
+  display: flex;
+  width: 700px;
+  justify-content: space-evenly;
+}
+
+.ball {
+  border: 2px solid black;
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
+}
