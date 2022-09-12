@@ -6,18 +6,43 @@ function randomColor() {
   const g = Math.floor(Math.random() * 255);
   const b = Math.floor(Math.random() * 255);
 
-  return `rgb(${r}, ${g}, ${b})`
+  return `rgb(${r}, ${g}, ${b})`;
 }
 
-function randomBall() { 
+function randomBall() {
   return Math.floor(Math.random() * balls.length);
 }
+const guessBall = balls[randomBall()];
 
-window.addEventListener('load', () => {
+function loadgame() {
   for (let index = 0; index < balls.length; index += 1) {
-    balls[index].style.backgroundColor = randomColor();    
+    balls[index].style.backgroundColor = randomColor();
   }
   randomBall();
-  const findBall = balls[randomBall()];
-  text.innerText = `${findBall.style.backgroundColor}`;
-});
+  text.innerText = `${guessBall.style.backgroundColor}`.replace('rgb', '');
+}
+
+window.addEventListener('load', loadgame);
+
+const chosenOne = document.getElementsByClassName('select');
+const result = document.getElementById('answer');
+
+function answer() {
+  if (chosenOne[0].style.backgroundColor === guessBall.style.backgroundColor) {
+    result.innerText = 'Acertou!';
+  } else {
+    result.innerText = 'Errou! Tente novamente!';
+  }
+}
+
+function select(ref) {
+  for (let index = 0; index < balls.length; index += 1) {
+    balls[index].classList.remove('select');
+    ref.target.classList.add('select');
+  }
+  answer();
+}
+
+for (let index = 0; index < balls.length; index += 1) {
+  balls[index].addEventListener('click', select);
+}
